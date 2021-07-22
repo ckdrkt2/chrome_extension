@@ -1,0 +1,17 @@
+{
+  "name": "Download Instagram Images",
+  "description": "Select links on a page and download them.",
+  "version": "1.0",
+  "minimum_chrome_version": "16.0.884",
+  "permissions": [
+    "downloads", "background", "tabs", "https://www.instagram.com/"
+  ],
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "icon.png"
+  },
+  "manifest_version": 2
+}
