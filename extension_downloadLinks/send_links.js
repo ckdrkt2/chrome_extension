@@ -31,5 +31,5 @@ links = links.filter(function(link) {
 });
 
 chrome.extension.sendRequest(links);
-
+});
 
