@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script type=module>
+        import {title, reviews, img} from './crawl.js';
+        document.getElementById("title").innerText = title;
+    </script>
+</head>
+
+<body>
+    <div style="margin-bottom:3px"><b>상품명 : <span id=title></span></b></div>
+    <div style="margin-bottom:3px"><b>리뷰수 : <span id=reviews></span></b></div>
+    <div style="margin-bottom:3px"><b>이미지 :</b></div>
+    <!-- <h1>이미지 링크 태그</h1> -->
+    <!-- <p><img src="img/test_img01.jpg" alt="이미지" width="280px" /></p> -->
+    <div>
+        <img id=img>
+    </div>
+    <!-- <p><a href="#"><img src="img/test_img01.jpg" alt="이미지" width="280px" /></a></p> -->
+
+</body>
+
+</html>
