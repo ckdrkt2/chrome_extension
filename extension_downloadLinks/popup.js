@@ -8,24 +8,19 @@ function showLinks() {
   }
   for (var i = 0; i < visibleLinks.length; ++i) {
     var row = document.createElement('tr');
-    var col0 = document.createElement('td');
-    var col1 = document.createElement('td');
-
-    col1.innerText = visibleLinks[i];
-    col1.style.whiteSpace = 'nowrap';
-    row.appendChild(col0);
-    row.appendChild(col1);
+    var col = document.createElement('td');
+    col.innerText = visibleLinks[i];
+    col.style.whiteSpace = 'nowrap';
+    row.appendChild(col);
     linksTable.appendChild(row);
   }
 }
 
-function downloadLinks() {
+function downloadCheckedLinks() {
   for (var i = 0; i < visibleLinks.length; ++i) {
-    if (true) {
-      chrome.downloads.download({url: visibleLinks[i]},
-                                             function(id) {
-      });
-    }
+    chrome.downloads.download({url: visibleLinks[i]},
+                                            function(id) {
+    });
   }
   window.close();
 }
@@ -34,16 +29,15 @@ chrome.extension.onRequest.addListener(function(links) {
   for (var index in links) {
     allLinks.push(links[index]);
   }
-  allLinks.sort();
+  console.log(allLinks)
   visibleLinks = allLinks;
   const length = document.getElementById('imgNums');
   length.innerText = visibleLinks.length;
   showLinks();
 });
 
-
 window.onload = function() {
-  document.getElementById('download').onclick = downloadLinks;
+  document.getElementById('download').onclick = downloadCheckedLinks;
 
   chrome.windows.getCurrent(function (currentWindow) {
     chrome.tabs.query({active: true, windowId: currentWindow.id},
@@ -53,12 +47,20 @@ window.onload = function() {
     });
   });
 
-  chrome.tabs.executeScript(tabs, {
-    code: 'document.getElementsByTagName("section")'
-  }, function (a) {
-    // var a = article[0].split("\n");
-    console.log(a);
-    document.getElementById('user_id').innerText = a[0];
-    document.getElementById('likes').innerText = a[1];
-  });
+  chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+      console.log(sender.tab ?
+                  "from a content script:" + sender.tab.url :
+                  "from the extension");
+      if (request.name == "id")
+        document.getElementById('user_id').innerText = request.value;
+      if (request.name == "like")
+        document.getElementById('likes').innerText = request.value;
+      if (request.name == "content")
+        document.getElementById('content').innerText = request.value;
+      if (request.name == "date")
+        document.getElementById('date').innerText = request.value;  
+    }
+  );
 };
+
