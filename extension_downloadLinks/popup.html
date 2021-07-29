@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 
+<html>
+
 <head>
-  <script src='popup.js'></script>
+  <script type='module' src='popup.js'></script>
 </head>
 
-<body>
+<body style="min-width:500px; max-width: 500px;">
   <div style="margin-bottom:3px"><b>ID : <span id=user_id></span></b></div>
   <div style="margin-bottom:3px"><b>LIKES : <span id=likes></span></b></div>
   <div style="margin-bottom:3px"><b>DATE : <span id=date></span></b></div>
@@ -14,6 +16,8 @@
       <b>Image URL : <span id=imgNums></span><button id=download style="margin-left:10px">Download Images</button></b>
     </tr>
   </table>
+  <div id=thumbnail style="max-height: 50px;">
+  </div>
 </body>
 
 </html>

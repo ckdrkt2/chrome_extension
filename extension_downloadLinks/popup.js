@@ -14,6 +14,11 @@ function showLinks() {
     row.appendChild(col);
     linksTable.appendChild(row);
   }
+  var img = document.createElement('img');
+  img.src = encodeURI(visibleLinks[9]);
+
+  document.getElementById('thumbnail').appendChild(img);
+
 }
 
 function downloadCheckedLinks() {
@@ -29,7 +34,6 @@ chrome.extension.onRequest.addListener(function(links) {
   for (var index in links) {
     allLinks.push(links[index]);
   }
-  console.log(allLinks)
   visibleLinks = allLinks;
   const length = document.getElementById('imgNums');
   length.innerText = visibleLinks.length;
@@ -49,15 +53,20 @@ window.onload = function() {
 
   chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-      console.log(sender.tab ?
-                  "from a content script:" + sender.tab.url :
-                  "from the extension");
+      // console.log(sender.tab ?
+      //             "from a content script:" + sender.tab.url :
+      //             "from the extension");
       if (request.name == "id")
         document.getElementById('user_id').innerText = request.value;
       if (request.name == "like")
         document.getElementById('likes').innerText = request.value;
-      if (request.name == "content")
-        document.getElementById('content').innerText = request.value;
+      if (request.name == "content") {
+        var content = request.value;
+        if (content.length > 100)
+          document.getElementById('content').innerText = content.slice(0,200) + '...';
+        else
+          document.getElementById('content').innerText = content;
+      }
       if (request.name == "date")
         document.getElementById('date').innerText = request.value;  
     }

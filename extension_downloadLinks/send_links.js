@@ -1,34 +1,26 @@
-var list = document.getElementsByTagName('img');
-var links = [].slice.apply(list);
-links = links.map(function(element) {
-  
-  return element.src;
-});
-
-var filterValue = "jpg s1080";
-var terms = filterValue.split(' ');
-links = links.filter(function(link) {
-  for (var termI = 0; termI < terms.length; ++termI) {
-    var term = terms[termI];
-    if (term.length != 0) {
-      var expected = (term[0] != '-');
-      if (!expected) {
-        term = term.substr(1);
-        if (term.length == 0) {
-          continue;
-        }
-      }
-      var found = (-1 !== link.indexOf(term));
-      if (found != expected) {
-        return false;
-      }
-    }
+// 이미지 url 가져오기
+for (let script of document.scripts) {
+  if (-1 !== script.textContent.indexOf("additionalDataLoaded(")) {
+    var s = script;
+    break
   }
-  return true;
-});
+}
+var urls = s.textContent.split(',');
+var links = [];
+for (let url of urls) {
+  if (-1 !== url.indexOf("display_url")) {
+    url = url.slice(url.indexOf("http"),);
+    url = url.replace(/\\u0026|"/g,'&');
+    links.push(url);
+  }
+}
 
 // id 가져오기
-var user_id = document.getElementsByTagName("header")[0].textContent;
+var user_id = ""
+var header = document.getElementsByTagName("header")[0].getElementsByTagName("span");
+for (let span of header) {
+  user_id = span.textContent;
+}
 
 // 좋아요 수 가져오기
 var likes = "";
@@ -46,8 +38,8 @@ var content = "";
 var date = "";
 var li_tag = document.getElementsByTagName("li");
 for (let li of li_tag) {
-  if (-1 !== li.textContent.indexOf(user_id)) {
-    content = li.textContent.split(user_id)[1];
+  if (li.getElementsByTagName("h2").length > 0) {
+    content = li.textContent.replace(user_id, "");
     date = li.getElementsByTagName("time")[0].title;
     break;
   }
