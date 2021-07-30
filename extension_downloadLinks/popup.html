@@ -4,20 +4,42 @@
 
 <head>
   <script type='module' src='popup.js'></script>
+  <style>
+    .frame {
+        width: 1200px;
+        height: 1800px;
+        border: 0;
+        -ms-transform: scale(0.25);
+        -moz-transform: scale(0.25);
+        -o-transform: scale(0.25);
+        -webkit-transform: scale(0.25);
+        transform: scale(0.25);
+
+        -ms-transform-origin: 0 0;
+        -moz-transform-origin: 0 0;
+        -o-transform-origin: 0 0;
+        -webkit-transform-origin: 0 0;
+        transform-origin: 0 0;
+    }
+  </style>
 </head>
 
 <body style="min-width:500px; max-width: 500px;">
   <div style="margin-bottom:3px"><b>ID : <span id=user_id></span></b></div>
   <div style="margin-bottom:3px"><b>LIKES : <span id=likes></span></b></div>
   <div style="margin-bottom:3px"><b>DATE : <span id=date></span></b></div>
-  <div style="margin-bottom:5px; display: flex;"><div style="font-weight: bold; margin-right:5px;">CONTENTS: </div><div id="content"></div></div>
+  <div style="margin-bottom:5px; display: flex;">
+    <div style="font-weight: bold; margin-right:5px;">CONTENTS: </div>
+    <div id="content"></div>
+  </div>
   <table id=links>
     <tr>
-      <b>Image URL : <span id=imgNums></span><button id=download style="margin-left:10px">Download Images</button></b>
+      <b>Image URL : <span id=imgNums></span><button id=download style="margin-left:10px; display: none;">Download Images</button></b>
     </tr>
   </table>
-  <div id=thumbnail style="max-height: 50px;">
+  <div id=thumbnail style="margin-top:10px; display: flex; overflow: auto;">
   </div>
+  <!-- <iframe id="alpha"></iframe> -->
 </body>
 
 </html>

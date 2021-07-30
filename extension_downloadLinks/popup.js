@@ -6,19 +6,23 @@ function showLinks() {
   while (linksTable.children.length > 1) {
     linksTable.removeChild(linksTable.children[linksTable.children.length - 1])
   }
+  // for (var i = 0; i < visibleLinks.length; ++i) {
+  //   var row = document.createElement('tr');
+  //   var col = document.createElement('td');
+  //   col.innerText = visibleLinks[i];
+  //   col.style.whiteSpace = 'nowrap';
+  //   row.appendChild(col);
+  //   linksTable.appendChild(row);
+  // }
   for (var i = 0; i < visibleLinks.length; ++i) {
-    var row = document.createElement('tr');
-    var col = document.createElement('td');
-    col.innerText = visibleLinks[i];
-    col.style.whiteSpace = 'nowrap';
-    row.appendChild(col);
-    linksTable.appendChild(row);
-  }
-  var img = document.createElement('img');
-  img.src = encodeURI(visibleLinks[9]);
-
-  document.getElementById('thumbnail').appendChild(img);
-
+    var iframe = document.createElement('iframe');
+    iframe.id = "img" + i;
+    iframe.class = "frame";
+    iframe.src = visibleLinks[i];
+    iframe.scrolling = "no";
+    iframe.style = "padding:2px; width: 100px; height: 100px; overflow:hidden;";
+    document.getElementById('thumbnail').appendChild(iframe);
+  } 
 }
 
 function downloadCheckedLinks() {
@@ -53,16 +57,13 @@ window.onload = function() {
 
   chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-      // console.log(sender.tab ?
-      //             "from a content script:" + sender.tab.url :
-      //             "from the extension");
       if (request.name == "id")
         document.getElementById('user_id').innerText = request.value;
       if (request.name == "like")
         document.getElementById('likes').innerText = request.value;
       if (request.name == "content") {
         var content = request.value;
-        if (content.length > 100)
+        if (content.length > 200)
           document.getElementById('content').innerText = content.slice(0,200) + '...';
         else
           document.getElementById('content').innerText = content;

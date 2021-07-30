@@ -4,13 +4,16 @@
   "version": "1.0",
   "minimum_chrome_version": "16.0.884",
   "permissions": [
-    "https://*/",
-    "downloads", 
+    "activeTab",
+    "<all_urls>",
+    "downloads",
+    "webRequestBlocking",
+    "webRequest", 
     "background", 
     "tabs", 
     "https://www.instagram.com/*", 
-    "storage",
-    "<all_urls>" 
+    "https://scontent-ssn1-1.cdninstagram.com/*",
+    "storage"
   ],
   "browser_action": {
     "default_icon": "icon.png",

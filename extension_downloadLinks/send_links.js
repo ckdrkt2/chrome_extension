@@ -14,12 +14,16 @@ for (let url of urls) {
     links.push(url);
   }
 }
+links = links.slice(1,);
 
 // id 가져오기
 var user_id = ""
 var header = document.getElementsByTagName("header")[0].getElementsByTagName("span");
 for (let span of header) {
-  user_id = span.textContent;
+  if (span.textContent !== "") {
+    user_id = span.textContent;
+    break
+  }
 }
 
 // 좋아요 수 가져오기
@@ -39,13 +43,14 @@ var date = "";
 var li_tag = document.getElementsByTagName("li");
 for (let li of li_tag) {
   if (li.getElementsByTagName("h2").length > 0) {
-    content = li.textContent.replace(user_id, "");
+    content = li.textContent.replace(user_id, "").replace("인증됨", "");
     date = li.getElementsByTagName("time")[0].title;
     break;
   }
 }
 
 chrome.extension.sendRequest(links);
+chrome.runtime.sendMessage({name: "links", value: links});
 chrome.runtime.sendMessage({name: "id", value: user_id});
 chrome.runtime.sendMessage({name: "like", value: likes});
 chrome.runtime.sendMessage({name: "content", value: content});
